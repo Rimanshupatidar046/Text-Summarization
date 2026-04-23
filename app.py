@@ -126,5 +126,4 @@ elif menu == "About":
 
     Designed for students & productivity 💡
     """)
-    """)
 st.markdown("Made with ❤️ using AI Summarizer")
