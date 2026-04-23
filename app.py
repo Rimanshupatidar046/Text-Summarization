@@ -56,20 +56,20 @@ if menu == "Home":
 
     st.title("🧠 AI Text Summarizer")
     st.caption("Transform long content into meaningful insights 🚀")
-   st.divider()
-st.markdown("### 📂 Upload or Enter Text Below")
+
     # FILE UPLOAD
     uploaded_file = st.file_uploader("📂 Upload TXT or PDF", type=["txt", "pdf"])
 
     # TEXT INPUT
-text = st.text_area("✍️Enter your text", height=200)
+    text = st.text_area("✍️ Enter your text")
 
     # WARNING (no stop here)
     if len(text) > 1000:
         st.warning("Text too long! Max 1000 characters allowed.")
 
     # BUTTON
- if st.button("🚀 Summarize", use_container_width=True):
+    if st.button("✨ Summarize"):
+
         final_text = ""
 
         if uploaded_file is not None:
@@ -125,5 +125,6 @@ elif menu == "About":
     - 🔐 Login system  
 
     Designed for students & productivity 💡
+    """)
     """)
 st.markdown("Made with ❤️ using AI Summarizer")
