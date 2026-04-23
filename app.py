@@ -61,7 +61,7 @@ if menu == "Home":
     uploaded_file = st.file_uploader("📂 Upload TXT or PDF", type=["txt", "pdf"])
 
     # TEXT INPUT
-  text = st.text_area("✍️ Enter your text", height=200)
+text = st.text_area("✍️Enter your text", height=200)
 
     # WARNING (no stop here)
     if len(text) > 1000:
