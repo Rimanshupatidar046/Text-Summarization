@@ -56,7 +56,7 @@ if menu == "Home":
 
     st.title("🧠 AI Text Summarizer")
     st.caption("Transform long content into meaningful insights 🚀")
-
+    st.divider()
     # FILE UPLOAD
     uploaded_file = st.file_uploader("📂 Upload TXT or PDF", type=["txt", "pdf"])
 
@@ -68,8 +68,7 @@ if menu == "Home":
         st.warning("Text too long! Max 1000 characters allowed.")
 
     # BUTTON
-    if st.button("✨ Summarize"):
-
+ if st.button("🚀 Summarize", use_container_width=True):
         final_text = ""
 
         if uploaded_file is not None:
