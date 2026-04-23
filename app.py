@@ -92,13 +92,14 @@ if menu == "Home":
         else:
             input_text = uploaded_file.read().decode("utf-8")
 
-    # TEXT INPUT
-    user_input = st.text_area(
-        "✍️ Enter your text",
-        value=input_text,
-        height=200,
-        key="text_area_main"
-    )
+   # ---------------- TEXT INPUT ----------------
+st.subheader("✍️ Or Enter Text Manually")
+
+text = st.text_area("Enter your text here:")
+
+# 👇 YAHI ADD KIYA (important)
+if len(text) > 1000:
+    st.warning("Text too long! Max 1000 characters allowed.")
 
     # BUTTON
     if st.button("✨ Summarize", key="summarize_btn"):
