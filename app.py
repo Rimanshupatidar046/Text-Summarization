@@ -61,7 +61,7 @@ if menu == "Home":
     uploaded_file = st.file_uploader("📂 Upload TXT or PDF", type=["txt", "pdf"])
 
     # TEXT INPUT
-    text = st.text_area("✍️ Enter your text")
+  text = st.text_area("✍️ Enter your text", height=200)
 
     # WARNING (no stop here)
     if len(text) > 1000:
@@ -126,4 +126,4 @@ elif menu == "About":
 
     Designed for students & productivity 💡
     """)
-st.markdown("Made with ❤️ using BART Transformer")
+st.markdown("Made with ❤️ using AI Summarizer")
