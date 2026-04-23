@@ -56,7 +56,8 @@ if menu == "Home":
 
     st.title("🧠 AI Text Summarizer")
     st.caption("Transform long content into meaningful insights 🚀")
-    st.divider()
+   st.divider()
+st.markdown("### 📂 Upload or Enter Text Below")
     # FILE UPLOAD
     uploaded_file = st.file_uploader("📂 Upload TXT or PDF", type=["txt", "pdf"])
 
