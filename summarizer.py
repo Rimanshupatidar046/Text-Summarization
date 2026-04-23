@@ -2,13 +2,13 @@ from transformers import pipeline
 
 def summarize_text(text):
     summarizer = pipeline(
-        task="text2text-generation",
-        model="facebook/bart-large-cnn"
+        "summarization",
+        model="sshleifer/distilbart-cnn-12-6"
     )
-    
-    summary = summarizer(text, max_length=130, min_length=30, do_sample=False)
-    
-    return summary[0]['generated_text']
+
+    summary = summarizer(text, max_length=100, min_length=30, do_sample=False)
+
+    return summary[0]['summary_text']
 
 def summarize_text(text):
     max_chunk = 800   # safe size
