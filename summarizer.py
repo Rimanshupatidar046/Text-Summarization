@@ -1,7 +1,14 @@
 from transformers import pipeline
 
-# load model only once
-summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+def summarize_text(text):
+    summarizer = pipeline(
+        task="text2text-generation",
+        model="facebook/bart-large-cnn"
+    )
+    
+    summary = summarizer(text, max_length=130, min_length=30, do_sample=False)
+    
+    return summary[0]['generated_text']
 
 def summarize_text(text):
     max_chunk = 800   # safe size
