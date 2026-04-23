@@ -1,50 +1,54 @@
-from transformers import pipeline
+import heapq
+import re
+from collections import Counter
 
-# ✅ model only load once
-summarizer = pipeline(
-    "summarization",
-    model="sshleifer/distilbart-cnn-12-6"
-)
-
-def summarize_text(text, max_len=100):
-    
-    # ✅ SAFETY: text limit (VERY IMPORTANT)
-    if len(text) > 1000:
-        text = text[:1000]
-
+def summarize_text(text, max_len=3):
     try:
-        result = summarizer(
-            text,
-            max_length=max_len,
-            min_length=30,
-            do_sample=False
-        )
-        return result[0]['summary_text']
+        # -------- EMPTY CHECK --------
+        if not text or not text.strip():
+            return "No text provided."
+
+        # -------- CLEAN TEXT --------
+        text = re.sub(r'\s+', ' ', text)
+
+        # -------- SPLIT SENTENCES --------
+        sentences = re.split(r'[.!?]', text)
+        sentences = [s.strip() for s in sentences if s.strip()]
+
+        # -------- EDGE CASE: VERY SMALL TEXT --------
+        if len(sentences) <= 1:
+            return text
+
+        # -------- WORD FREQUENCY --------
+        words = re.findall(r'\w+', text.lower())
+        freq = Counter(words)
+
+        # -------- SENTENCE SCORING --------
+        scores = {}
+        for sentence in sentences:
+            sentence_words = re.findall(r'\w+', sentence.lower())
+
+            # skip too short sentences
+            if len(sentence_words) < 3:
+                continue
+
+            for word in sentence_words:
+                scores[sentence] = scores.get(sentence, 0) + freq[word]
+
+        # अगर scoring fail हो जाए
+        if not scores:
+            return '. '.join(sentences[:max_len])
+
+        # -------- SAFE max_len --------
+        max_len = max(1, min(max_len, len(sentences) - 1))
+
+        # -------- TOP SENTENCES --------
+        best = heapq.nlargest(max_len, scores, key=scores.get)
+
+        # -------- MAINTAIN ORIGINAL ORDER --------
+        summary = '. '.join([s for s in sentences if s in best])
+
+        return summary
 
     except Exception as e:
         return f"Error: {str(e)}"
-
-def summarize_text(text):
-    max_chunk = 800   # safe size
-
-    # split text into chunks
-    chunks = []
-    for i in range(0, len(text), max_chunk):
-        chunks.append(text[i:i+max_chunk])
-
-    summaries = []
-
-    # summarize each chunk
-    for chunk in chunks:
-        summary = summarizer(
-            chunk,
-            max_length=120,
-            min_length=40,
-            do_sample=False
-        )[0]['summary_text']
-        summaries.append(summary)
-
-    # combine all summaries
-    final_summary = " ".join(summaries)
-
-    return final_summary
